@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadUrl("https:serciosdigitalesplus.com/cartas/");
+        web.loadUrl("https://serciosdigitalesplus.com/cartas/");
+        //web.loadUrl("https://www.desmos.com/scientific?lang=es");
     }
 }
