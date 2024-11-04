@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         requestBluetoothConnectPermission();
         requestLocationPermission();
 
-        IdbtnBuscar = findViewById(R.id.idBtnBuscar);
+        IdbtnBuscar = findViewById(R.id.IdBtnBuscar);
         IdBtnConectar = findViewById(R.id.IdBtnConectar);
         IdBtnLuz1on = findViewById(R.id.IdBtnLuz1on);
         IdBtnLuz1off = findViewById(R.id.IdBtnLuz1off);
