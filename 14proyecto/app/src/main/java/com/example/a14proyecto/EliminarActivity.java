@@ -1,5 +1,6 @@
 package com.example.a14proyecto;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -55,12 +57,55 @@ public class EliminarActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mostrar(txtID.getText().toString());
+                btnSearchOnclick(txtID.getText().toString());
+            }
+        });
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnAceptarOnclick(v);
             }
         });
     }
 
-    public void mostrar(String clave){
+    public void btnAceptarOnclick(View v){
+        deleteDB(txtID.getText().toString());
+    }
+
+    public void deleteDB(String id) {
+        try {
+            conn = new ConexionSQLiteHelper(this,  "articulos", null, 3);
+            db = conn.getReadableDatabase();
+
+            String sql = "delete from articulo where id ='" + id + "'";
+            System.out.println(sql);
+
+            db.execSQL(sql);
+            System.out.println("ok");
+            alerta("se elimino el Articulo", "Informacion");
+            txtNom.setText("");
+            txtCosto.setText("");
+            txtFecha.setText("");
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public void alerta(String line, String titulo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo)
+                .setMessage(line)
+                .setCancelable(true)
+                .setPositiveButton( "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //
+            }
+        }).show();
+    }
+
+
+    public void btnSearchOnclick(String clave){
         try{
             conn = new ConexionSQLiteHelper(this, "articulos", null, 3);
             db = conn.getReadableDatabase();
