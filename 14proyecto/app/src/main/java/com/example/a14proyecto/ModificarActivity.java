@@ -62,7 +62,61 @@ public class ModificarActivity extends AppCompatActivity {
                 btnSearchOnclick(v);
             }
         });
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnAceptarOnclick(v);
+            }
+        });
     }
+
+    public void btnAceptarOnclick(View v){
+        String nom = txtNom.getText().toString();
+        String costo = txtCosto.getText().toString();
+        String fecha = txtFecha.getText().toString();
+        String id = txtID.getText().toString();
+
+        String error = "";
+
+        if(nom.equals("")){
+            error+= "Falta el nombre\n";
+        }
+        if(costo.equals("")){
+            error += "Falta el costo\n";
+        }
+        if(fecha.equals("")){
+            error += "Falta la fecha\n";
+        }
+        if(error.equals("")){
+            updateDB(id,nom,costo,fecha);
+        }else{
+            alerta(error,"Error al actualizar la base de datos");
+        }
+    }
+
+    public void updateDB(String id, String nom, String costo, String fecha)
+    {
+        try
+        {
+            conn = new ConexionSQLiteHelper( this,  "articulos",  null,  3);
+            db = conn.getReadableDatabase();
+
+            String sql = "update articulo set nom='" + nom + "', costo='" + costo + "', fecha='" + fecha + "' where id='" + id + "'";
+            System.out.println(sql);
+
+            db.execSQL(sql);
+            System.out.println("ok");
+            alerta( "Se modifico el Articulo.", "Informacion");
+            txtNom.setText("");
+            txtCosto.setText("");
+            txtFecha.setText("");
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
 
     public void btnSearchOnclick(View v){
         mostrar(txtID.getText().toString());
