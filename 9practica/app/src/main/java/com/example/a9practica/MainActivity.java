@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 text.setText("");
-                i=0;
+                i=0;us
             }
         }.start();
     }
