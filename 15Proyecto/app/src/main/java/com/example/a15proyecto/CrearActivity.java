@@ -2,6 +2,7 @@ package com.example.a15proyecto;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -101,15 +103,16 @@ public class CrearActivity extends AppCompatActivity {
         String costo = txtCosto.getText().toString();
         String fecha = "";
 
-        String url = "https://serviciosdigitalesplus.com/distribuida2026/procesos.php?tipo=1&id=" + id
-                + "&nom=" + nom + "&costo=" + costo + "&foto=" + spinner + "&fecha=2024/10/23&r=" + Math.random();
-
+        //System.out.println(id+" "+nom+" "+costo);
+        //String url = "https://serviciosdigitalesplus.com/distribuida2024/procesos.php?tipo=1&id=200&nom=teclado&costo=300&foto=teclado.jpg&fecha=12/12/23&form=MG0AV3";
+        String url = "https://serviciosdigitalesplus.com/distribuida2024/procesos.php?tipo=1&id="+id+"&nom=teclado&costo=300&foto=teclado.jpg&fecha=12/12/23&form=MG0AV3";
         requestQueue = Volley.newRequestQueue(this);
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("web ok");
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -117,8 +120,40 @@ public class CrearActivity extends AppCompatActivity {
                 System.out.println("web error");
             }
         });
-
         requestQueue.add(jsonObjectRequest);
+
+        //solucion para el problema del costo, usar el editor que permite cambiar el costo
+        //url = "https://serviciosdigitalesplus.com/distribuida2024/procesos.php?tipo=2&id=200&nom=teclado&costo=300&foto=teclado.jpg&fecha=12/12/23&form=MG0AV3";
+        url = "https://serviciosdigitalesplus.com/distribuida2024/procesos.php?tipo=2&id="+id+"&nom="+nom+"&costo="+costo+"&foto="+spinner+"&fecha=12/12/23&form=MG0AV3";
+        requestQueue = Volley.newRequestQueue(this);
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("web ok");
+                txtID.setText("");
+                txtNom.setText("");
+                txtCosto.setText("");
+                alerta("Se creo","Informacion");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("web error");
+            }
+        });
+        requestQueue.add(jsonObjectRequest);/**/
+    }
+    public void alerta(String line, String titulo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo)
+                .setMessage(line)
+                .setCancelable(true)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //
+                    }
+                }).show();
     }
 
 }
