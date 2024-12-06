@@ -48,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
         Bitmap image =(Bitmap) data.getExtras().get("data");
         int dimension = Math.min(image.getWidth(), image.getHeight());
         image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-        img.setImageBitmap(image);uso
+        img.setImageBitmap(image);
     }
 }
