@@ -1,5 +1,6 @@
 package com.example.a3proyecto_micambioventanas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class gustosActivity extends AppCompatActivity {
     ImageView img;
     Button btn1;
+    Button btndisgustos;
     int i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +29,39 @@ public class gustosActivity extends AppCompatActivity {
         });
         img= (ImageView) findViewById(R.id.imageView2);
         btn1= (Button) findViewById(R.id.button5);
+        btndisgustos = (Button) findViewById(R.id.button2);
 
-        img.setImageResource(R.drawable.cubo1);
+        img.setImageResource(R.drawable.gusto3);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(i==0){
-                    img.setImageResource(R.drawable.cubo2);
-                    i=1;
-                }else{
-                    img.setImageResource(R.drawable.cubo1);
-                    i=0;
+                i++;
+                switch (i){
+                    case 1:
+                        img.setImageResource(R.drawable.gusto1);
+                        break;
+                    case 2:
+                        img.setImageResource(R.drawable.gusto2);
+                        break;
+                    case 3:
+                        img.setImageResource(R.drawable.gusto3);
+                        i=0;
+                        break;
                 }
+
             }
         });
+
+        btndisgustos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cambioVentana(view);
+            }
+        });
+    }
+    public void cambioVentana(View v){
+        Intent i = new Intent(this, disgustosActivity.class);
+        startActivity(i);
     }
 }

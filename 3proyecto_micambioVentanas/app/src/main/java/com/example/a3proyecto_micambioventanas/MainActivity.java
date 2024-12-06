@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         String pass = txtPass.getText().toString();
 
         if(user.equals("root") && pass.equals("123")){
-            Intent i = new Intent(this,gustosActivity.class);
+            Intent i = new Intent(this,disgustosActivity.class);
             i.putExtra("user",user);
             i.putExtra("pass",pass);
 
